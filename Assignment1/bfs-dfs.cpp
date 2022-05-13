@@ -38,3 +38,10 @@ void dfs(int u){
     }
     tout[u] = t++;
 }
+
+bool tree_edge(int u, int v){
+    if(abs(tin[u] - tin[v]) == 1){
+        return true;
+    }
+    return false;
+}
