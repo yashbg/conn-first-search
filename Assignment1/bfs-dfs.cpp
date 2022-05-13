@@ -3,6 +3,9 @@ using namespace std;
 
 int n = 10;
 vector<vector<int>> adj(n);
+vector<int> tin(n), tout(n);
+vector<bool> vis(n, false);
+int t = 0;
 
 vector<int> bfs(int s){
     queue<int> q;
@@ -23,4 +26,15 @@ vector<int> bfs(int s){
         }
     }
     return d;
+}
+
+void dfs(int u){
+    vis[u] = true;
+    tin[u] = t++;
+    for(int v : adj[u]){
+        if(!vis[v]){
+            dfs(v);
+        }
+    }
+    tout[u] = t++;
 }
