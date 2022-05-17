@@ -39,9 +39,27 @@ void dfs(int u){
     tout[u] = t++;
 }
 
-bool tree_edge(int u, int v){
-    if(abs(tin[u] - tin[v]) == 1){
-        return true;
+void dfs_comp(int u, int k, vector<int>& comps){
+    vis[u] = true;
+    comps[u] = k;
+    for(int v : adj[u]){
+        if(!vis[v]){
+            dfs_comp(v, k, comps);
+        }
     }
-    return false;
+}
+
+vector<int> conn_comp(){
+    vector<int> comps(n);
+    for(int i = 0; i < n; i++){
+        vis[i] = false;
+    }
+    int k = 0;
+    for(int u = 0; u < n; u++){
+        if(!vis[u]){
+            k++;
+            dfs_comp(u, k, comps);
+        }
+    }
+    return comps;
 }
