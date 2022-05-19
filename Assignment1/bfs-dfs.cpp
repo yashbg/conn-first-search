@@ -6,6 +6,8 @@ vector<vector<int>> adj(n);
 vector<int> tin(n), tout(n);
 vector<bool> vis(n, false);
 int t = 0;
+vector<int> low(n);
+vector<vector<bool>> deleted(n, vector<bool>(n));
 
 // Question 1
 
@@ -97,13 +99,13 @@ vector<int> conn_comp(){
 
 // Question 4
 
-bool dfs_cycle(int u, int p){
+bool dfs_cycle(int u, int p = -1){
     vis[u] = true;
     for(int v : adj[u]){
         if(v == p){
             continue;
         }
-        else if(vis[u]){
+        if(vis[u]){
             return true;
         }
         if(dfs_cycle(v, u)){
@@ -117,7 +119,7 @@ bool is_cyclic(){
     vis.assign(n, false);
     for(int u = 0; u < n; u++){
         if(!vis[u]){
-            if(dfs_cycle(u, -1)){
+            if(dfs_cycle(u)){
                 return true;
             }
         }
@@ -127,3 +129,35 @@ bool is_cyclic(){
 
 // Question 5
 
+void dfs_bridge(int u, int p = -1){
+    vis[u] = true;
+    tin[u] = t++;
+    low[u] = tin[u];
+    for(int v : adj[u]){
+        if(v == p){
+            continue;
+        }
+        if(vis[v]){
+            low[u] = min(low[u], tin[v]);
+        }
+        else{
+            dfs(v, u);
+            low[u] = min(low[u], low[v]);
+            if(low[v] > tin[u]){
+                deleted[u][v] = true;
+                deleted[v][u] = true;
+            }
+        }
+    }
+}
+
+void delete_bridges(){
+    vis.assign(n, false);
+    t = 0;
+    deleted.assign(n, vector<bool>(n, false));
+    for(int u = 0; u < n; u++){
+        if(!vis[u]){
+            dfs_bridge(u);
+        }
+    }
+}
