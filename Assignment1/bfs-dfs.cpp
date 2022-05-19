@@ -94,3 +94,35 @@ vector<int> conn_comp(){
     }
     return comps;
 }
+
+// Question 4
+
+bool dfs_cycle(int u, int p){
+    vis[u] = true;
+    for(int v : adj[u]){
+        if(v == p){
+            continue;
+        }
+        else if(vis[u]){
+            return true;
+        }
+        if(dfs_cycle(v, u)){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool is_cyclic(){
+    for(int i = 0; i < n; i++){
+        vis[i] = false;
+    }
+    for(int u = 0; u < n; u++){
+        if(!vis[u]){
+            if(dfs_cycle(u, -1)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
