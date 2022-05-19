@@ -36,9 +36,7 @@ bool dfs_tree_edge(int a, int u, int v){
 }
 
 bool is_tree_edge(int u, int v){
-    for(int i = 0; i < n; i++){
-        vis[i] = false;
-    }
+    vis.assign(n, false);
     for(int a = 0; a < n; a++){
         if(!vis[a]){
             if(dfs_tree_edge(a, u, v)){
@@ -54,7 +52,7 @@ bool is_tree_edge(int u, int v){
 vector<int> bfs(int s){
     queue<int> q;
     vector<int> d(n, -1);
-    vector<bool> vis(n, false);
+    vis.assign(n, false);
     q.push(s);
     d[s] = 0;
     vis[s] = true;
@@ -86,9 +84,7 @@ void dfs_comp(int u, int k, vector<int>& comps){
 
 vector<int> conn_comp(){
     vector<int> comps(n);
-    for(int i = 0; i < n; i++){
-        vis[i] = false;
-    }
+    vis.assign(n, false);
     int k = 0;
     for(int u = 0; u < n; u++){
         if(!vis[u]){
@@ -118,9 +114,7 @@ bool dfs_cycle(int u, int p){
 }
 
 bool is_cyclic(){
-    for(int i = 0; i < n; i++){
-        vis[i] = false;
-    }
+    vis.assign(n, false);
     for(int u = 0; u < n; u++){
         if(!vis[u]){
             if(dfs_cycle(u, -1)){
@@ -130,3 +124,6 @@ bool is_cyclic(){
     }
     return false;
 }
+
+// Question 5
+
