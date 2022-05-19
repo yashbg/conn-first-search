@@ -20,29 +20,33 @@ void dfs(int u){
     tout[u] = t++;
 }
 
-void dfs_tree_edge(int a, int u, int v, bool& ans){
+bool dfs_tree_edge(int a, int u, int v){
     vis[a] = true;
     for(int b : adj[a]){
         if(!vis[b]){
             if((u == a && v == b) || (u == b && v == a)){
-                ans = true;
+                return true;
             }
-            dfs_tree_edge(b, u, v, ans);
+            if(dfs_tree_edge(b, u, v)){
+                return true;
+            }
         }
     }
+    return false;
 }
 
 bool is_tree_edge(int u, int v){
-    bool ans = false;
     for(int i = 0; i < n; i++){
         vis[i] = false;
     }
     for(int a = 0; a < n; a++){
         if(!vis[a]){
-            dfs_tree_edge(a, u, v, ans);
+            if(dfs_tree_edge(a, u, v)){
+                return true;
+            }
         }
     }
-    return ans;
+    return false;
 }
 
 // Question 2
