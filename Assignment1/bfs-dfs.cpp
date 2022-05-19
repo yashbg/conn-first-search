@@ -7,6 +7,46 @@ vector<int> tin(n), tout(n);
 vector<bool> vis(n, false);
 int t = 0;
 
+// Question 1
+
+void dfs(int u){
+    vis[u] = true;
+    tin[u] = t++;
+    for(int v : adj[u]){
+        if(!vis[v]){
+            dfs(v);
+        }
+    }
+    tout[u] = t++;
+}
+
+void dfs_tree_edge(int a, int u, int v, bool& ans){
+    vis[a] = true;
+    for(int b : adj[a]){
+        if(!vis[b]){
+            if((u == a && v == b) || (u == b && v == a)){
+                ans = true;
+            }
+            dfs_tree_edge(b, u, v, ans);
+        }
+    }
+}
+
+bool is_tree_edge(int u, int v){
+    bool ans = false;
+    for(int i = 0; i < n; i++){
+        vis[i] = false;
+    }
+    for(int a = 0; a < n; a++){
+        if(!vis[a]){
+            dfs_tree_edge(a, u, v, ans);
+        }
+    }
+    return ans;
+}
+
+// Question 2
+
 vector<int> bfs(int s){
     queue<int> q;
     vector<int> d(n, -1);
@@ -28,16 +68,7 @@ vector<int> bfs(int s){
     return d;
 }
 
-void dfs(int u){
-    vis[u] = true;
-    tin[u] = t++;
-    for(int v : adj[u]){
-        if(!vis[v]){
-            dfs(v);
-        }
-    }
-    tout[u] = t++;
-}
+// Question 3
 
 void dfs_comp(int u, int k, vector<int>& comps){
     vis[u] = true;
