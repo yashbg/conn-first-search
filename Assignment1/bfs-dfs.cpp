@@ -141,7 +141,7 @@ void dfs_bridge(int u, int p = -1){
             low[u] = min(low[u], tin[v]);
         }
         else{
-            dfs(v, u);
+            dfs_bridge(v, u);
             low[u] = min(low[u], low[v]);
             if(low[v] > tin[u]){
                 deleted[u][v] = true;
