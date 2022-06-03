@@ -5,21 +5,17 @@
 using namespace std;
 
 vector<vector<int>> g;
-vector<int> col, order, l_longest;
+vector<bool> vis;
+vector<int> order, l_longest;
 
-bool dfs(int u){
-    col[u] = 1;
+void dfs(int u){
+    vis[u] = true;
     for(int v : g[u]){
-        if(col[v] == 1){
-            return false;
-        }
-        if(!col[v] && !dfs(v)){
-            return false;
+        if(!vis[v]){
+            dfs(v);
         }
     }
-    col[u] = 2;
     order.push_back(u);
-    return true;
 }
 
 int main(){
@@ -36,13 +32,10 @@ int main(){
         cin >> a >> b;
         g[--a].push_back(--b);
     }
-    col.assign(n, 0);
+    vis.assign(n, false);
     for(int i = 0; i < n; i++){
-        if(!col[i]){
-            if(!dfs(i)){
-                // cout << "IMPOSSIBLE" << endl;
-                return 0;
-            }
+        if(!vis[i]){
+            dfs(i);
         }
     }
     l_longest.assign(n, INT_MIN);
