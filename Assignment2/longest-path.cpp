@@ -29,7 +29,7 @@ int main(){
     #endif
 
     int n, m;
-    cin >> n >> m;
+    cin >> n >> m; 
     g.assign(n, vector<int>());
     for(int i = 0; i < m; i++){
         int a, b;
@@ -46,15 +46,20 @@ int main(){
         }
     }
     l_longest.assign(n, INT_MIN);
-    for(int i = n - 1; i >= 0; i--){
-        for(int v : g[order[i]]){
-            l_longest[order[i]] = max(l_longest[order[i]], l_longest[v] + 1);
+    for(int i = 0; i < n; i++){
+        if(order[i] == n - 1){
+            l_longest[order[i]] = 1;
+        }
+        else{
+            for(int v : g[order[i]]){
+                l_longest[order[i]] = max(l_longest[order[i]], l_longest[v] + 1);
+            }
         }
     }
-    if(l_longest[n - 1] < 0){
+    if(l_longest[0] < 0){
         cout << "IMPOSSIBLE";
         return 0;
     }
-    cout << l_longest[n - 1] << endl;
+    cout << l_longest[0] << endl;
     return 0;
 }
