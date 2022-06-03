@@ -6,7 +6,7 @@ using namespace std;
 
 vector<vector<int>> g;
 vector<bool> vis;
-vector<int> order, l_longest;
+vector<int> order, l_longest, par;
 
 void dfs(int u){
     vis[u] = true;
@@ -39,13 +39,17 @@ int main(){
         }
     }
     l_longest.assign(n, INT_MIN);
+    par.assign(n, -1);
     for(int i = 0; i < n; i++){
         if(order[i] == n - 1){
             l_longest[order[i]] = 1;
         }
         else{
             for(int v : g[order[i]]){
-                l_longest[order[i]] = max(l_longest[order[i]], l_longest[v] + 1);
+                if(l_longest[v] + 1 > l_longest[order[i]]){
+                    par[order[i]] = v;
+                    l_longest[order[i]] = l_longest[v] + 1;
+                }
             }
         }
     }
@@ -54,5 +58,10 @@ int main(){
         return 0;
     }
     cout << l_longest[0] << endl;
+    int cur = 0;
+    while(cur != -1){
+        cout << cur + 1 << ' ';
+        cur = par[cur];
+    }
     return 0;
 }
