@@ -6,10 +6,12 @@ using namespace std;
 
 class dsu{
     vector<int> par;
+    vector<int> r;
 
 public:
     dsu(int n){
         par.assign(n, 0);
+        r.assign(n, 0);
         for(int i = 0; i < n; i++){
             par[i] = i;
         }
@@ -18,7 +20,15 @@ public:
     void union_(int a, int b){
         a = find(a);
         b = find(b);
-        par[b] = a;
+        if(a != b){
+            if(r[a] < r[b]){
+                swap(a, b);
+            }
+            par[b] = a;
+            if(r[a] == r[b]){
+                r[a]++;
+            }
+        }
     }
 
     int find(int u){
