@@ -66,9 +66,6 @@ int main(){
         }
     }
     ans.assign(m, false);
-    // for(int i = 0; i < m; i++){
-    //     cout << comp[2 * i] << ' ' << comp[2 * i + 1] << endl;
-    // }
     for(int i = 0; i < m; i++){
         if(comp[2 * i] == comp[2 * i + 1]){
             cout << "IMPOSSIBLE" << endl;
