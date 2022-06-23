@@ -3,6 +3,7 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+int mod = 1e9 + 7;
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -38,7 +39,7 @@ int main(){
                 s.insert({d[v], v});
             }
             else if(d[u] + w == d[v]){
-                nr[v] += nr[u];
+                nr[v] = (nr[v] + nr[u]) % mod;
             }
         }
     }
