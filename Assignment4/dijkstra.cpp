@@ -21,7 +21,8 @@ int main(){
     }
     vector<long long> d(n, LLONG_MAX);
     d[0] = 0;
-    vector<int> p(n, -1);
+    vector<int> p(n, -1), nr(n, 0);
+    nr[0] = 1;
     set<pair<long long, int>> s;
     s.insert({0, 0});
     while(!s.empty()){
@@ -33,10 +34,14 @@ int main(){
                 s.erase({d[v], v});
                 d[v] = d[u] + w;
                 p[v] = u;
+                nr[v] = nr[u];
                 s.insert({d[v], v});
+            }
+            else if(d[u] + w == d[v]){
+                nr[v] += nr[u];
             }
         }
     }
-    cout << d[n - 1] << endl;
+    cout << d[n - 1] << ' ' << nr[n - 1] << endl;
     return 0;
 }
