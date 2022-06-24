@@ -15,14 +15,13 @@ int main(){
     cin >> n >> m;
     vector<vector<pair<int, long long>>> g(n);
     for(int i = 0; i < m; i++){
-        int u, v;
-        long long w;
+        int u, v, w;
         cin >> u >> v >> w;
         g[--u].push_back({--v, w});
     }
     vector<long long> d(n, LLONG_MAX);
     d[0] = 0;
-    vector<int> p(n, -1), nr(n, 0), mine(n, INT_MAX), maxe(n, 0);
+    vector<int> p(n, -1), nr(n), mine(n), maxe(n);
     nr[0] = 1;
     mine[0] = maxe[0] = 0;
     set<pair<long long, int>> s;
